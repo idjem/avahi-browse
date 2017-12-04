@@ -60,7 +60,9 @@ describe("Initial test suite for avahi-browse", function(){
       if(service.service_name == serviceName && service.port == servicePort){
         done();
         browser.stop();
+        foo.kill();
       }
     });
+    var foo = AVAHI_REGISTER(serviceName, servicePort, "_http._tcp");
   });
 });
