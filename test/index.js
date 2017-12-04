@@ -4,7 +4,7 @@ const  AVAHI_BROWSE   = require('../');
 const  AVAHI_REGISTER = require('../register.js');
 const once            = require('once');
 
-describe("Initial test suite for mdns-spawn", function(){
+describe("Initial test suite for avahi-browse", function(){
 
   var serviceName = "dummy_local_service";
   var servicePort = 14545;
