@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - 8
 before_install:
-  - sudo apt-get install
+  - sudo apt-get install avahi-utils
 after_script:
   - npm test
   
