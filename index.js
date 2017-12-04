@@ -1,7 +1,6 @@
 const Events   = require('events');
 const spawn = require('child_process').spawn;
 const Split = require('stream-split');
-const splitter = new Split(new Buffer('\n'));
 const logger   = require('debug')('avahi-browse');
 
 class AVAHI_BROWSE extends Events.EventEmitter {
@@ -29,7 +28,11 @@ class AVAHI_BROWSE extends Events.EventEmitter {
       logger('Error : ', err);
       this.emit(AVAHI_BROWSE.EVENT_DNSSD_ERROR, err);
     });
-    this._proc.stdout = this._proc.stdout.pipe(splitter);
+    this._proc.stdout = this._proc.stdout.pipe(new Split(new Buffer('\n')));
+    this._proc.stderr = this._proc.stderr.pipe(new Split(new Buffer('\n')));
+    this._proc.stderr.on('data', (err) => {
+      this.emit(AVAHI_BROWSE.EVENT_DNSSD_ERROR, err);
+    });
     this._proc.stdout.on('data', (data) => {
       const serviceInfo = data.toString().split(';');
       var service = {service_name : serviceInfo[3], service_type : serviceInfo[4], domain : serviceInfo[5]};

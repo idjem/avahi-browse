@@ -47,4 +47,20 @@ describe("Initial test suite for avahi-browse", function(){
     browser.stop();
     expect(browser._proc).not.to.be.ok();
   });
+
+  it("test restart ", function(done){
+    done = once(done);
+    var browser = new AVAHI_BROWSE();
+    browser.start();
+    browser.stop();
+    browser.start();
+    var serviceName = "dummy_local_service";
+    var servicePort = 14545;
+    browser.on(AVAHI_BROWSE.EVENT_SERVICE_UP, function(service){
+      if(service.service_name == serviceName && service.port == servicePort){
+        done();
+        browser.stop();
+      }
+    });
+  });
 });
