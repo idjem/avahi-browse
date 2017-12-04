@@ -35,12 +35,12 @@ class AVAHI_BROWSE extends Events.EventEmitter {
     });
     this._proc.stdout.on('data', (data) => {
       const serviceInfo = data.toString().split(';');
-      var service = {service_name : serviceInfo[3], service_type : serviceInfo[4], domain : serviceInfo[5]};
+      var service = {service_name : serviceInfo[3], target : {service_type : serviceInfo[4], domain : serviceInfo[5]}};
 
       if(serviceInfo[0] == "="){
-        service.host         = serviceInfo[7];
-        service.hostname     = serviceInfo[6];
-        service.port         = serviceInfo[8];
+        service.target.host         = serviceInfo[7];
+        service.target.hostname     = serviceInfo[6];
+        service.target.port         = serviceInfo[8];
         logger("Add service ", service);
         this.emit(AVAHI_BROWSE.EVENT_SERVICE_UP, service);
       }

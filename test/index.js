@@ -26,8 +26,8 @@ describe("Initial test suite for avahi-browse", function(){
       foo.kill();
     };
 
-    browser.on(AVAHI_BROWSE.EVENT_SERVICE_UP, function(service){
-      if(service.service_name == serviceName && service.port == servicePort){
+    browser.on(AVAHI_BROWSE.EVENT_SERVICE_UP, function(service) {
+      if(service.service_name == serviceName && service.target.port == servicePort){
         chain();
       }
     });
@@ -57,7 +57,7 @@ describe("Initial test suite for avahi-browse", function(){
     var serviceName = "dummy_local_service";
     var servicePort = 14545;
     browser.on(AVAHI_BROWSE.EVENT_SERVICE_UP, function(service){
-      if(service.service_name == serviceName && service.port == servicePort){
+      if(service.service_name == serviceName && service.target.port == servicePort){
         done();
         browser.stop();
         foo.kill();
