@@ -24,11 +24,11 @@ class AVAHI_BROWSE extends Events.EventEmitter {
   start() {
     if(this._proc)
       return;
+    this._proc = spawn("avahi-browse", [this._service_type, '-r', '-k', '-p']);
     this._proc.on('error', (err)=> {
       logger('Error : ', err);
       this.emit(AVAHI_BROWSE.EVENT_DNSSD_ERROR, err);
     });
-    this._proc = spawn("avahi-browse", [this._service_type, '-r', '-k', '-p']);
     this._proc.stdout = this._proc.stdout.pipe(splitter);
     this._proc.stdout.on('data', (data) => {
       const serviceInfo = data.toString().split(';');
