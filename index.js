@@ -37,7 +37,7 @@ class AVAHI_BROWSE extends Events.EventEmitter {
       const serviceInfo = data.toString().split(';');
       var service = {service_name : serviceInfo[3], target : {service_type : serviceInfo[4], domain : serviceInfo[5]}};
 
-      if(serviceInfo[0] == "="){
+      if(serviceInfo[0] == "=") {
         service.target.host         = serviceInfo[7];
         service.target.hostname     = serviceInfo[6];
         service.target.port         = serviceInfo[8];
